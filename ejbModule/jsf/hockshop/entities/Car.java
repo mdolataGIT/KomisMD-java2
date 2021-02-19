@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="car")
+@Table(name="Car")
 @NamedQuery(name="Car.findAll", query="SELECT c FROM Car c")
 public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,25 +20,25 @@ public class Car implements Serializable {
 	@Column(unique = true, nullable = false)
 	private Integer idCar;
 
-	@Column(length = 45)
+	@Column
 	private byte accidentFree;
 
-	@Column(length = 45)
+	@Column
 	private String brand;
 
-	@Column(length = 45)
+	@Column
 	private int capacity;
 
-	@Column(length = 255)
+	@Column
 	private String description;
 
-	@Column(length = 45)
+	@Column
 	private String firstRegistration;
 
-	@Column(length = 45)
+	@Column
 	private String model;
 
-	@Column(length = 45)
+	@Column
 	private int power;
 
 	//bi-directional many-to-one association to Company
@@ -54,12 +54,6 @@ public class Car implements Serializable {
 	private List<Photo> photos;
 	
 	
-	public void log(String text) {
-		System.out.println(text + ": [" + idCar + "], " + brand + ", " + model + ", " + firstRegistration +", "+capacity+ ", "+power+", "+ accidentFree+ ", "+ description);
-	}
-	
-	
-
 	public Car() {
 	}
 

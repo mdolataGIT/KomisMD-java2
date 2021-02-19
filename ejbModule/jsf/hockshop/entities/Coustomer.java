@@ -11,16 +11,20 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Coustomer.findAll", query="SELECT c FROM Coustomer c")
+@Table(name="Coustomer")
+@NamedQuery(name="Coustomer.findAll", query="SELECT c  FROM Coustomer c")
 public class Coustomer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idCoustomer;
-
+	@Column(unique = true, nullable= false)
+	private Integer idCoustomer;
+	
+	@Column
 	private String coustomerName;
-
+	
+	@Column
 	private String coustomerSurname;
 
 	@Temporal(TemporalType.DATE)
@@ -37,11 +41,11 @@ public class Coustomer implements Serializable {
 	public Coustomer() {
 	}
 
-	public int getIdCoustomer() {
+	public Integer getIdCoustomer() {
 		return this.idCoustomer;
 	}
 
-	public void setIdCoustomer(int idCoustomer) {
+	public void setIdCoustomer(Integer idCoustomer) {
 		this.idCoustomer = idCoustomer;
 	}
 

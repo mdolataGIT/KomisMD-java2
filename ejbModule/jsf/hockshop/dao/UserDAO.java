@@ -1,5 +1,6 @@
 package jsf.hockshop.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,10 +34,59 @@ public class UserDAO {
 		return em.find(User.class,id);
 	}
 	
+	public User getByLoginAndPassword(String login, String password) {
+		User user=null;
+		
+		Query query = em.createQuery("select u from User u where login = :login and password = :password");// login = :login
+		query.setParameter("login", login);
+		query.setParameter("password", password);
+		
+		try {
+			user = (User)query.getSingleResult();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	
+	//public User getUserRolesFromDatabase(String role) {
+	//	User user=null;
+		
+	//	Query query = em.createQuery("select u from User u where role = :role");// login = :login
+	//	query.setParameter("role", role);
+		
+	//	try {
+	//		user = (User)query.getSingleResult();
+	//	}catch (Exception e) {
+	//		e.printStackTrace();
+	//	}
+	//	return user;
+//	}
+	
+	public List<String> getUserRolesFromDatabase(User user) {
+		
+		ArrayList<String> roles = new ArrayList<String>();
+		
+		if (user.getRole().equals("user")) {
+			roles.add("user");
+		}
+		if (user.getRole().equals("manager")) {
+			roles.add("manager");
+		}
+		if (user.getRole().equals("admin")) {
+			roles.add("admin");
+		}
+		
+		return roles;
+	}
+	
+
+	
 	public List<User> getFullList(){
 		List<User> list = null;
 		
-		Query query = em.createQuery("select u form User u");
+		Query query = em.createQuery("select u from User u");
 		
 		try {
 			list = query.getResultList();
@@ -58,9 +108,9 @@ public class UserDAO {
 		String login = (String) searchParams.get("login");
 		if (login!=null) {
 			if(where.isEmpty()) {
-				where="where";
+				where="where ";
 			}else {
-				where+="and";
+				where+="and ";
 			}
 			where +="u.login like :login ";
 		}

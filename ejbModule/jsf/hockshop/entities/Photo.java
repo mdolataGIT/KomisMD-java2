@@ -9,16 +9,20 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="Photo")
 @NamedQuery(name="Photo.findAll", query="SELECT p FROM Photo p")
 public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idPhoto;
+	@Column(unique = true, nullable = false)
+	private Integer idPhoto;
 
+	@Column
 	private String photoDescription;
-
+	
+	@Column
 	private String url;
 
 	//bi-directional many-to-one association to Car
@@ -28,11 +32,11 @@ public class Photo implements Serializable {
 	public Photo() {
 	}
 
-	public int getIdPhoto() {
+	public Integer getIdPhoto() {
 		return this.idPhoto;
 	}
 
-	public void setIdPhoto(int idPhoto) {
+	public void setIdPhoto(Integer idPhoto) {
 		this.idPhoto = idPhoto;
 	}
 

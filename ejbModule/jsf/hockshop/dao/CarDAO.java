@@ -2,6 +2,8 @@ package jsf.hockshop.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,6 +50,9 @@ public class CarDAO {
 	}
 	
 	public List<Car> getList(Map<String, Object> searchParams){
+		
+
+		
 		List<Car> list =null;
 		
 		String select = "select c ";
@@ -56,19 +61,35 @@ public class CarDAO {
 		String orderby ="order by c.brand asc, c.model";
 		
 		String brand = (String) searchParams.get("brand");
+		
 		if (brand!=null) {
 			if(where.isEmpty()) {
 				where="where";
 			}else {
 				where+="and";
 			}
-			where +="c.brand like :brand ";
+			where +=" c.brand like :brand ";
 		}
+		
+		Integer companyId = (Integer) searchParams.get("companyId");
+		if (companyId!=null) {
+			if(where.isEmpty()) {
+				where="where ";
+			}else {
+				where+="and ";
+			}
+			where +=" c.company.idCompany = :idComp ";
+		}
+		
 		
 		Query query = em.createQuery(select + from + where + orderby);
 		
 		if(brand != null) {
-			query.setParameter("brand", brand+"%");
+			query.setParameter("brand", brand+"%");			
+		}
+		
+		if(companyId!=null) {
+			query.setParameter("idComp",companyId);
 		}
 		
 		try {

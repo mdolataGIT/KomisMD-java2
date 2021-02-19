@@ -59,9 +59,9 @@ public class CompanyDAO {
 		String name = (String) searchParams.get("name");
 		if (name!=null) {
 			if(where.isEmpty()) {
-				where="where";
+				where="where ";
 			}else {
-				where+="and";
+				where+="and ";
 			}
 			where +="c.name like :name ";
 		}
