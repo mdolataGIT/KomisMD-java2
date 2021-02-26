@@ -10,36 +10,26 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="User")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
 	private Integer idUser;
 
-	@Column(length = 45)
 	private String email;
 
-	@Column(length = 45)
 	private String login;
 
-	@Column(length = 45)
 	private String password;
 
-	@Column(length = 45)
 	private String role;
 
 	//bi-directional many-to-one association to Company
 	@OneToMany(mappedBy="user")
 	private List<Company> companies;
 
-	public void log(String text) {
-		System.out.println(text + ": [" + idUser + "], " + login + ", " + password + ", " + role +", "+email);
-	}
-	
 	public User() {
 	}
 

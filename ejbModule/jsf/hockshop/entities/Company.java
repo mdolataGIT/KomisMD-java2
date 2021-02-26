@@ -10,26 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Company")
 @NamedQuery(name="Company.findAll", query="SELECT c FROM Company c")
 public class Company implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
 	private Integer idCompany;
 
-	@Column
 	private String address;
 
-	@Column
 	private byte arch;
 
-	@Column
 	private String city;
 
-	@Column
 	private String name;
 
 	//bi-directional many-to-one association to Car

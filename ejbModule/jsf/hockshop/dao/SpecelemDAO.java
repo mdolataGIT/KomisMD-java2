@@ -9,34 +9,35 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import jsf.hockshop.entities.Coustomer;
+import jsf.hockshop.entities.Specelem;
 
 @Stateless
-public class CoustomerDAO {
+public class SpecelemDAO {
 	private final static String UNIT_NAME = "hockshop-simplePU";
 	
 	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
 	
-	public void create (Coustomer coustomer) {
-		em.persist(coustomer);
+	public void create (Specelem specelem) {
+		em.persist(specelem);
 	}
 	
-	public Coustomer merge (Coustomer coustomer) {
-		return em.merge(coustomer);
+	public Specelem merge (Specelem specelem) {
+		return em.merge(specelem);
 	}
 	
-	public void remove (Coustomer coustomer) {
-		em.remove(em.merge(coustomer));
+	public void remove (Specelem specelem) {
+		em.remove(em.merge(specelem));
 	}
 	
-	public Coustomer find(Object id) {
-		return em.find(Coustomer.class,id);
+	public Specelem find(Object id) {
+		return em.find(Specelem.class,id);
 	}
 	
-	public List<Coustomer> getFullList(){
-		List<Coustomer> list =null;
+	public List<Specelem> getFullList(){
+		List<Specelem> list =null;
 		
-		Query query = em.createQuery("select c from Coustomer c");
+		Query query = em.createQuery("select c from Specelem c");
 		
 		try {
 			list = query.getResultList();
@@ -48,24 +49,24 @@ public class CoustomerDAO {
 		
 	}
 	
-	public List<Coustomer> getList(Map<String,Object>searchParams){
-		List<Coustomer> list=null;
+	public List<Specelem> getList(Map<String,Object>searchParams){
+		List<Specelem> list=null;
 		
 		String select = "select c ";
-		String from = "from Coustomer c ";
+		String from = "from Specelem c ";
 		String where ="";
-		String orderby = "order by c.coustomerName, c.coustomerSurname";
+		String orderby = "order by c.specName, c.specValue";
 		
-		String coustomerName = (String) searchParams.get("coustomerName");
+		String specName = (String) searchParams.get("specName");
 		
-		if(coustomerName!=null) {
+		if(specName!=null) {
 			if(where.isEmpty()) {
 				where="where";
 			}else {
 				where+="and";
 				
 			}
-			where+="c.coustomerName like :coustomerName";
+			where+="c.specName like :specName";
 		}
 		
 		Integer carId = (Integer) searchParams.get("carId");
@@ -80,8 +81,8 @@ public class CoustomerDAO {
 		
 		Query query =em.createQuery(select+from+where+orderby);
 		
-		if(coustomerName!=null) {
-			query.setParameter("coustomerName",coustomerName+"%");
+		if(specName!=null) {
+			query.setParameter("coustomerName",specName+"%");
 		}
 		
 		if(carId!=null) {

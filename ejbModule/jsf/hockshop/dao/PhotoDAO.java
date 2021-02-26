@@ -36,7 +36,7 @@ public class PhotoDAO {
 	public List<Photo> getFullList(){
 		List<Photo> list = null;
 		
-		Query query = em.createQuery("select p from Photo p");
+		Query query = em.createQuery("select c from Photo c");
 		
 		try {
 			list = query.getResultList();
@@ -49,25 +49,39 @@ public class PhotoDAO {
 	public List<Photo>getList(Map<String,Object> searchParams){
 		List<Photo> list= null;
 		
-		String select = "select p ";
-		String from = " from Photo p  ";
+		String select = "select c ";
+		String from = " from Photo c ";
 		String where = "";
-		String orderby = " order by p.url, p.photoDescription";
+		String orderby = "order by c.url";
 		
 		String url = (String) searchParams.get("url");
 		if (url!=null) {
 			if(where.isEmpty()) {
-				where="where";
+				where="where ";
 			}else {
-				where+="and";
+				where+="and ";
 			}
-			where +="p.url like :url ";
+			where +="c.url like :url ";
 		}
+		
+		Integer carId = (Integer) searchParams.get("carId");
+		if (carId!=null) {
+			if(where.isEmpty()) {
+				where="where ";
+			}else {
+				where+="and ";
+			}
+			where +=" c.car.idCar = :idCa ";
+		}		
 		
 		Query query = em.createQuery(select + from + where + orderby);
 		
 		if(url != null) {
 			query.setParameter("url", url+"%");
+		}
+		
+		if(carId!=null) {
+			query.setParameter("idCa",carId);
 		}
 		
 		try {

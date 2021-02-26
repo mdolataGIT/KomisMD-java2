@@ -10,35 +10,26 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="Car")
 @NamedQuery(name="Car.findAll", query="SELECT c FROM Car c")
 public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
 	private Integer idCar;
 
-	@Column
 	private byte accidentFree;
 
-	@Column
 	private String brand;
 
-	@Column
 	private int capacity;
 
-	@Column
 	private String description;
 
-	@Column
 	private String firstRegistration;
 
-	@Column
 	private String model;
 
-	@Column
 	private int power;
 
 	//bi-directional many-to-one association to Company
@@ -46,18 +37,21 @@ public class Car implements Serializable {
 	private Company company;
 
 	//bi-directional many-to-one association to Coustomer
-	@ManyToOne
-	private Coustomer coustomer;
+	@OneToMany(mappedBy="car")
+	private List<Coustomer> coustomers;
 
 	//bi-directional many-to-one association to Photo
 	@OneToMany(mappedBy="car")
 	private List<Photo> photos;
-	
-	
+
+	//bi-directional many-to-one association to Specelem
+	@OneToMany(mappedBy="car")
+	private List<Specelem> specelems;
+
 	public Car() {
 	}
 
-	public  Integer getIdCar() {
+	public Integer getIdCar() {
 		return this.idCar;
 	}
 
@@ -129,12 +123,26 @@ public class Car implements Serializable {
 		this.company = company;
 	}
 
-	public Coustomer getCoustomer() {
-		return this.coustomer;
+	public List<Coustomer> getCoustomers() {
+		return this.coustomers;
 	}
 
-	public void setCoustomer(Coustomer coustomer) {
-		this.coustomer = coustomer;
+	public void setCoustomers(List<Coustomer> coustomers) {
+		this.coustomers = coustomers;
+	}
+
+	public Coustomer addCoustomer(Coustomer coustomer) {
+		getCoustomers().add(coustomer);
+		coustomer.setCar(this);
+
+		return coustomer;
+	}
+
+	public Coustomer removeCoustomer(Coustomer coustomer) {
+		getCoustomers().remove(coustomer);
+		coustomer.setCar(null);
+
+		return coustomer;
 	}
 
 	public List<Photo> getPhotos() {
@@ -157,6 +165,28 @@ public class Car implements Serializable {
 		photo.setCar(null);
 
 		return photo;
+	}
+
+	public List<Specelem> getSpecelems() {
+		return this.specelems;
+	}
+
+	public void setSpecelems(List<Specelem> specelems) {
+		this.specelems = specelems;
+	}
+
+	public Specelem addSpecelem(Specelem specelem) {
+		getSpecelems().add(specelem);
+		specelem.setCar(this);
+
+		return specelem;
+	}
+
+	public Specelem removeSpecelem(Specelem specelem) {
+		getSpecelems().remove(specelem);
+		specelem.setCar(null);
+
+		return specelem;
 	}
 
 }
