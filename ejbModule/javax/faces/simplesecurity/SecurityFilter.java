@@ -14,11 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Filter implementing security control in Java web applications.
- * 
- * @author Przemysław Kudłacik
- */
+
 public class SecurityFilter implements Filter {
 	private String noPermitionPage;
 	private HashSet<String> publicResources = new HashSet<String>();

@@ -50,20 +50,6 @@ public class UserDAO {
 	}
 	
 	
-	//public User getUserRolesFromDatabase(String role) {
-	//	User user=null;
-		
-	//	Query query = em.createQuery("select u from User u where role = :role");// login = :login
-	//	query.setParameter("role", role);
-		
-	//	try {
-	//		user = (User)query.getSingleResult();
-	//	}catch (Exception e) {
-	//		e.printStackTrace();
-	//	}
-	//	return user;
-//	}
-	
 	public List<String> getUserRolesFromDatabase(User user) {
 		
 		ArrayList<String> roles = new ArrayList<String>();

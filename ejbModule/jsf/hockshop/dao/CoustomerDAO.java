@@ -42,8 +42,7 @@ public class CoustomerDAO {
 			list = query.getResultList();
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}	
 		return list;
 		
 	}

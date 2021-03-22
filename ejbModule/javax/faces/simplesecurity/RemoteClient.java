@@ -6,13 +6,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- * Class representing remote client in web applications.
- *   
- * @author Przemysław Kudłacik
- *
- * @param <T> Any class allowing to store additional information to session (i.e. User entity)
- */
+
 public class RemoteClient<T> {
 
 	private String login;
